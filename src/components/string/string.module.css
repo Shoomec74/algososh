@@ -1,0 +1,28 @@
+@keyframes change-color {
+  0% {
+    background-color: #D252E1;
+  }
+
+  50% {
+    background-color: #7FE051;
+  }
+
+  100% {
+    background-color: #D252E1;
+  }
+}
+
+@keyframes sort {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.container {
+  display        : flex;
+  justify-content: center;
+}
