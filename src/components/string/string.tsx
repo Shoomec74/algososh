@@ -7,44 +7,80 @@ import stringComponentStyle from "./string.module.css";
 import { ElementStates } from "../../types/element-states";
 
 export const StringComponent: React.FC = () => {
-  const { container } = stringComponentStyle;
-
-  const [inputValue, setInputValue] = useState("");
-  const [outputValue, setOutputValue] = useState("");
+  const { container, form, input, button } = stringComponentStyle;
+  //--Строка на вход--//
+  const [inputValue, setInputValue] = useState<string>("");
+  //--Строка на выход--//
+  const [outputValue, setOutputValue] = useState<string>("");
+  //--Число шагов для опредения выделения компонента всего 3, есть css переменные--//
   const [step, setStep] = useState<number>(0);
+  //--Флаг что пошла анимация для отображения лоадера на кнопке и деактивация инпута--//
+  const [isRun, setIsRun] = useState<boolean>(false);
 
+  //--Обработчик инпута--//
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
+  //--Логика клика по кнопке--//
   const handleReverseClick = async () => {
-    setStep(0);
-    let strArr = inputValue.split("");
-    let start = 0;
-    let end = strArr.length - 1;
-
-    setOutputValue(inputValue);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    while (start < end) {
-      if(start + 1 === end - 1){
-        setStep(step => step + 1);
-      }
-      console.log(`Старт - ${start}, конец - ${end}`)
-      await swap(strArr, start, end);
-      setOutputValue(strArr.join(""));
-      start++;
-      end--;
-      setStep(step => step + 1);
+    //--Не запускать лоадер если пустая строка и стираем предыдущий разворот строки--//
+    if (inputValue === "") {
+      setOutputValue("");
+      return;
     }
+    //--Включаем лоадер--//
+    setIsRun(true);
+    //--Обнуление числа шагов--//
+    setStep(0);
+    //--Разбиваем строку на символы--//
+    let strCharArr = inputValue.split("");
+    //--Устанавливаем начало для перебора массива--//
+    let startIndex = 0;
+    //--Устанавливаем конец для перебора массива--//
+    let endIndex = strCharArr.length - 1;
+    //--Показываем на экране введенную строку до и после изменений--//
+    setOutputValue(inputValue);
+    //--Ждем время в мсек чтобы начать алгоритм сортировки--//
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    //--Пока стартовый индекс меньше конечного индекса разворачиваем строку--//
+    while (startIndex <= endIndex) {
+      //--Для нечетного количества символов к перекрестному символу алгоритм перстановки не применяется--//
+      if (startIndex === endIndex) {
+        setStep((step) => step + 1);
+        break;
+      }
+      //--Дожидаемся алгоритма перестановки--//
+      await swap(strCharArr, startIndex, endIndex);
+      //--Добавляем шаг для изменения цвета бордера переставляемых и перестановленных символов--//
+      setStep((step) => step + 1);
+      //--Сдвигаемся к середине--//
+      startIndex++;
+      endIndex--;
+    }
+    //--Убираем за собой мусор--//
+    setInputValue("");
+    //--Убираем лоадер с кнопки--//
+    setIsRun(false);
   };
 
-  function swap(arr: string[], i: number, j: number): Promise<void> {
+  //--Логика перстановки элементов для ожидания используются Promise--//
+  function swap(
+    strCharArr: string[],
+    startIndex: number,
+    endIndex: number
+  ): Promise<void> {
     return new Promise((resolve) => {
+      //--Перед началом сортировки ждем время в мсек--//
       setTimeout(() => {
-        const temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        setOutputValue(arr.join(""));
+        //--Складываем в буфер символ, который слева--//
+        const temp = strCharArr[startIndex];
+        //--Вместо элемента слева подставляем элемент справа--//
+        strCharArr[startIndex] = strCharArr[endIndex];
+        //--Вместо элемента справа подставляем левый элемент из буфера--//
+        strCharArr[endIndex] = temp;
+        //--Показываем строку после изменений--//
+        setOutputValue(strCharArr.join(""));
         resolve();
       }, 1000);
     });
@@ -66,14 +102,23 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <Input
-        placeholder="Введите текст"
-        value={inputValue}
-        onChange={handleInputChange}
-        maxLength={11}
-      ></Input>
-      <Button text="Развернуть" onClick={handleReverseClick}></Button>
-      <span>Максимум 11 символов</span>
+      <form className={form}>
+        <Input
+          placeholder="Введите текст"
+          value={inputValue}
+          onChange={handleInputChange}
+          maxLength={11}
+          extraClass={`${input}`}
+          isLimitText={true}
+          disabled={isRun}
+        ></Input>
+        <Button
+          text="Развернуть"
+          onClick={handleReverseClick}
+          isLoader={isRun}
+          extraClass={`${button} ml-6`}
+        ></Button>
+      </form>
       <div className={container}>
         {outputValue.split("").map((letter, index) => (
           <Circle
