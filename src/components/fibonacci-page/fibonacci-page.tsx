@@ -4,6 +4,7 @@ import fibonacciPageStyle from "./fibonacci-page.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const FibonacciPage: React.FC = () => {
   const { container, form, input, button } = fibonacciPageStyle;
@@ -16,19 +17,19 @@ export const FibonacciPage: React.FC = () => {
       setInputValue(0);
     }
     const value: number = parseInt(event.target.value);
-    if(1 <= value && value <= 19){
-      setInputValue(value)
+    if (1 <= value && value <= 19) {
+      setInputValue(value);
     }
   };
 
-  function fibonacci(n:number) {
+  function fibonacci(n: number) {
     const arr = [1, 1];
     if (n > 1) {
       for (let i = 0; i < n - 2; i++) {
         arr.push(arr[i] + arr[i + 1]);
       }
     }
-    return arr[n-1];
+    return arr[n - 1];
   }
 
   const fibIterative = (value: number): Promise<number[]> => {
@@ -36,9 +37,9 @@ export const FibonacciPage: React.FC = () => {
       let resArr: number[] = [];
       let i = 0;
       const interval = setInterval(() => {
-        if(i <= value){
+        if (i <= value) {
           const res = fibonacci(i + 1);
-          resArr.push( res)
+          resArr.push(res);
           setOutputValue(resArr);
           i++;
         }
@@ -48,8 +49,7 @@ export const FibonacciPage: React.FC = () => {
           resolve(resArr);
           setInputValue(0);
         }
-
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     });
   };
 
@@ -62,14 +62,14 @@ export const FibonacciPage: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setOutputValue(outputValue => [...outputValue])
-    }, 500);
-    return () => clearInterval(interval)
-  }, [outputValue])
+      setOutputValue((outputValue) => [...outputValue]);
+    }, SHORT_DELAY_IN_MS);
+    return () => clearInterval(interval);
+  }, [outputValue]);
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={form}>
+      <form className={form} onSubmit={(evt) => evt.preventDefault()}>
         <Input
           placeholder="Введите число"
           value={inputValue >= 1 ? inputValue : ""}
@@ -79,7 +79,9 @@ export const FibonacciPage: React.FC = () => {
           extraClass={`${input}`}
           isLimitText={true}
           disabled={isRun}
-          onKeyDown={(evt) => ["e", "E", "+", "-", ","].includes(evt.key) && evt.preventDefault()}
+          onKeyDown={(evt) =>
+            ["e", "E", "+", "-", ","].includes(evt.key) && evt.preventDefault()
+          }
         ></Input>
         <Button
           text="Рассчитать"
@@ -91,7 +93,12 @@ export const FibonacciPage: React.FC = () => {
       <div className={container}>
         {outputValue.length > 0 &&
           outputValue.map((letter, index) => (
-            <Circle key={index} letter={letter.toString()} index={index}></Circle>
+            <Circle
+              key={index}
+              letter={letter.toString()}
+              index={index}
+              extraClass="mr-4 mb-25"
+            />
           ))}
       </div>
     </SolutionLayout>

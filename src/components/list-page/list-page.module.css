@@ -1,0 +1,58 @@
+.form {
+  justify-content: space-between;
+  max-width      : 950px;
+  margin         : 0 auto;
+  gap            : 12px;
+  align-items    : top;
+}
+
+.box {
+  width         : 100%;
+  display       : flex;
+  gap           : 12px;
+  padding-bottom: 12px;
+}
+
+.input {
+  max-width: 204px;
+}
+
+.button {
+  min-width: 175px;
+  word-wrap: nowrap;
+}
+
+.bigButton {
+  width: 360px;
+}
+
+.content {
+  margin-top     : 48px;
+  display        : flex;
+  gap            : 10px;
+  justify-content: center;
+  align-items    : center;
+  height         : 140px;
+}
+
+.circle {
+  display      : flex;
+  position     : relative;
+  max-width    : 952px;
+  align-content: center;
+  align-items  : center;
+}
+
+.downCircle {
+  position        : absolute;
+  top             : 120px;
+  left            : 12px;
+  background-color: #fff;
+}
+
+.upCircle {
+  position        : absolute;
+  top             : -65px;
+  left            : 12px;
+  background-color: #fff;
+}

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import stringComponentStyle from "./string.module.css";
 import { ElementStates } from "../../types/element-states";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 export const StringComponent: React.FC = () => {
   const { container, form, input, button } = stringComponentStyle;
@@ -18,7 +19,7 @@ export const StringComponent: React.FC = () => {
   const [isRun, setIsRun] = useState<boolean>(false);
 
   //--Обработчик инпута--//
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
@@ -42,7 +43,7 @@ export const StringComponent: React.FC = () => {
     //--Показываем на экране введенную строку до и после изменений--//
     setOutputValue(inputValue);
     //--Ждем время в мсек чтобы начать алгоритм сортировки--//
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
     //--Пока стартовый индекс меньше конечного индекса разворачиваем строку--//
     while (startIndex <= endIndex) {
       //--Для нечетного количества символов к перекрестному символу алгоритм перстановки не применяется--//
@@ -82,7 +83,7 @@ export const StringComponent: React.FC = () => {
         //--Показываем строку после изменений--//
         setOutputValue(strCharArr.join(""));
         resolve();
-      }, 1000);
+      }, DELAY_IN_MS);
     });
   }
 
@@ -102,7 +103,7 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={form}>
+      <form className={form} onSubmit={(evt) => evt.preventDefault()}>
         <Input
           placeholder="Введите текст"
           value={inputValue}
@@ -125,6 +126,7 @@ export const StringComponent: React.FC = () => {
             key={index}
             letter={letter}
             state={stateCircle(step, index, outputValue.split(""))}
+            extraClass="mr-4"
           />
         ))}
       </div>

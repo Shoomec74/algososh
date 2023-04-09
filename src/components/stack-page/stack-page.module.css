@@ -1,26 +1,10 @@
 .form {
-  max-width      : 980px;
+  max-width      : 829px;
   display        : flex;
-  align-items    : center;
+  align-items    : top;
   justify-content: space-between;
   margin         : 0 auto;
   gap            : 12px;
-}
-
-.radioButtonBox {
-  max-width: 221px;
-  display  : flex;
-  gap      : 40px;
-}
-
-.sortingBox {
-  max-width: 422px;
-  display  : flex;
-  gap      : 12px;
-}
-
-.button {
-  width: 205px;
 }
 
 .content {
@@ -29,5 +13,5 @@
   justify-content: center;
   align-items    : flex-end;
   gap            : 10px;
-  height         : 368px;
+  height         : 140px;
 }

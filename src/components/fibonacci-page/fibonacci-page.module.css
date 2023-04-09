@@ -1,18 +1,21 @@
 .container {
   display        : flex;
   justify-content: center;
-  padding-top: 120px;
+  padding-top    : 120px;
+  max-width      : 940px;
+  margin         : 0 auto;
+  flex-wrap      : wrap;
 }
 
-.form{
-  display: flex;
+.form {
+  display        : flex;
   justify-content: center;
 }
 
-.input{
+.input {
   max-width: 377px;
 }
 
-.button{
+.button {
   max-width: 133px;
 }
