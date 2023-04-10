@@ -117,6 +117,7 @@ export const StringComponent: React.FC = () => {
           text="Развернуть"
           onClick={handleReverseClick}
           isLoader={isRun}
+          disabled={inputValue === ''}
           extraClass={`${button} ml-6`}
         ></Button>
       </form>

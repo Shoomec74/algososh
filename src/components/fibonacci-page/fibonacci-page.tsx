@@ -88,6 +88,7 @@ export const FibonacciPage: React.FC = () => {
           onClick={handleReverseClick}
           isLoader={isRun}
           extraClass={`${button} ml-6`}
+          disabled={inputValue == 0}
         ></Button>
       </form>
       <div className={container}>

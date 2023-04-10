@@ -65,12 +65,14 @@ export const ListPage: React.FC = () => {
     addByIndex: false,
     delByIndex: false,
   });
+  const [disabled1, setDisabled1] = useState<boolean>(false);
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const handleChangeIndex = (e: ChangeEvent<HTMLInputElement>) => {
+    if(Number(e.target.value) < 0 || listArr.length <= Number(e.target.value) || e.target.value.length > listArr.length.toString().length) return;
     setInputIndex(e.target.value);
   };
 
@@ -314,8 +316,10 @@ export const ListPage: React.FC = () => {
             onChange={handleChangeIndex}
             extraClass={input}
             disabled={disabled}
-            max={8}
-            maxLength={1}
+            max={listArr.length - 1}
+            onKeyDown={(evt) =>
+              ["e", "E", "+", "-", ","].includes(evt.key) && evt.preventDefault()
+            }
             type={"number"}
           />
           <Button
@@ -379,3 +383,4 @@ export const ListPage: React.FC = () => {
     </SolutionLayout>
   );
 };
+
