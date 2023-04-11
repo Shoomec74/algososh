@@ -1,0 +1,24 @@
+.form {
+  display        : flex;
+  align-items    : top;
+  justify-content: space-between;
+  max-width      : 830px;
+  margin         : 0 auto;
+  gap            : 12px;
+}
+
+.box {
+  display  : flex;
+  max-width: 630px;
+  width    : 100%;
+  gap      : 12px;
+}
+
+.content {
+  margin-top     : 50px;
+  display        : flex;
+  gap            : 10px;
+  justify-content: center;
+  align-items    : flex-end;
+  height         : 140px;
+}
