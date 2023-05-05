@@ -73,19 +73,21 @@ export const StackPage: React.FC = () => {
   };
 
   return (
-    <SolutionLayout title="Стек">
-      <form className={form} onSubmit={(evt) => evt.preventDefault()}>
+    <SolutionLayout title="Стек" extraClass="stack">
+      <form className={form} onSubmit={(evt) => evt.preventDefault()} data-cy='form'>
         <Input
           isLimitText={true}
           maxLength={4}
           value={inputValue}
           onChange={handleInputChange}
+          data-cy='input'
         />
         <Button
           text="Добавить"
           onClick={() => push(inputValue)}
           disabled={!inputValue}
           isLoader={inProgress.push}
+          data-cy='submit'
         />
         <Button
           text="Удалить"

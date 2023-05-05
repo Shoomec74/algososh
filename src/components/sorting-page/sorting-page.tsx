@@ -45,7 +45,7 @@ export const SortingPage: FC = () => {
   }, []);
 
   return (
-    <SolutionLayout title="Сортировка массива">
+    <SolutionLayout title="Сортировка массива" extraClass="sorting">
       <form className={form} onSubmit={(evt) => evt.preventDefault()}>
         <div className={radioButtonBox}>
           <RadioInput

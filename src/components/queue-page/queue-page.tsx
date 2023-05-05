@@ -94,19 +94,21 @@ export const QueuePage: React.FC = () => {
   };
 
   return (
-    <SolutionLayout title="Очередь">
+    <SolutionLayout title="Очередь" extraClass="queue">
       <form className={form} onSubmit={(evt) => evt.preventDefault()}>
         <Input
           isLimitText={true}
           maxLength={4}
           value={inputValue}
           onChange={handleChange}
+          data-cy='input'
         />
         <Button
           text="Добавить"
           disabled={!inputValue || tail === 7}
           onClick={() => enqueue(inputValue)}
           isLoader={inProgress.push}
+          data-cy='submit'
         />
         <Button
           text="Удалить"

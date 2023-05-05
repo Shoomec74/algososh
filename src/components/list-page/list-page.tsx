@@ -65,7 +65,6 @@ export const ListPage: React.FC = () => {
     addByIndex: false,
     delByIndex: false,
   });
-  const [disabled1, setDisabled1] = useState<boolean>(false);
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -269,7 +268,7 @@ export const ListPage: React.FC = () => {
   };
 
   return (
-    <SolutionLayout title="Связный список">
+    <SolutionLayout title="Связный список" extraClass="list">
       <form className={form} onSubmit={(evt) => evt.preventDefault()}>
         <div className={box}>
           <Input
@@ -279,6 +278,7 @@ export const ListPage: React.FC = () => {
             value={inputValue}
             onChange={handleChangeValue}
             extraClass={input}
+            data-cy='input'
           />
           <Button
             text="Добавить в head"
@@ -286,6 +286,7 @@ export const ListPage: React.FC = () => {
             onClick={addHead}
             isLoader={inProgress.addToHead}
             disabled={!inputValue || disabled || listArr.length >= 8}
+            data-cy='add_head'
           />
           <Button
             text="Добавить в tail"
@@ -293,6 +294,7 @@ export const ListPage: React.FC = () => {
             onClick={addTail}
             isLoader={inProgress.addToTail}
             disabled={!inputValue || disabled || listArr.length >= 8}
+            data-cy='add_tail'
           />
           <Button
             text="Удалить из head"
@@ -300,6 +302,7 @@ export const ListPage: React.FC = () => {
             onClick={delHead}
             isLoader={inProgress.delFromHead}
             disabled={listArr.length <= 1 || disabled}
+            data-cy='remove_head'
           />
           <Button
             text="Удалить из tail"
@@ -334,6 +337,7 @@ export const ListPage: React.FC = () => {
               listArr.length >= 8 ||
               Number(inputIndex) > listArr.length - 1
             }
+            data-cy='add_by_index'
           />
           <Button
             text="Удалить по индексу"
@@ -383,4 +387,3 @@ export const ListPage: React.FC = () => {
     </SolutionLayout>
   );
 };
-
