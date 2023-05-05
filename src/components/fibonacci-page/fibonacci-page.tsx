@@ -68,8 +68,8 @@ export const FibonacciPage: React.FC = () => {
   }, [outputValue]);
 
   return (
-    <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={form} onSubmit={(evt) => evt.preventDefault()}>
+    <SolutionLayout title="Последовательность Фибоначчи" extraClass="fibonacci">
+      <form className={form} onSubmit={(evt) => evt.preventDefault()} data-cy='form'>
         <Input
           placeholder="Введите число"
           value={inputValue >= 1 ? inputValue : ""}
@@ -82,6 +82,7 @@ export const FibonacciPage: React.FC = () => {
           onKeyDown={(evt) =>
             ["e", "E", "+", "-", ","].includes(evt.key) && evt.preventDefault()
           }
+          data-cy='input'
         ></Input>
         <Button
           text="Рассчитать"
@@ -89,6 +90,7 @@ export const FibonacciPage: React.FC = () => {
           isLoader={isRun}
           extraClass={`${button} ml-6`}
           disabled={inputValue == 0}
+          data-cy='submit'
         ></Button>
       </form>
       <div className={container}>
